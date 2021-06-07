@@ -21,7 +21,7 @@ data class Usuario(
     var estado: String,
     var ultimoLogin: Date,
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "rol_id")
     var rol: Rol? = null
 )
@@ -34,6 +34,6 @@ data class Rol(
     var rol: String,
     var estado: String,
 
-    @OneToMany(mappedBy = "rol", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "rol", cascade = arrayOf(CascadeType.ALL))
     var usuarios: List<Usuario> = emptyList()
 )

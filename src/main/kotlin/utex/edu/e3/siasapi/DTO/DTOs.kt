@@ -7,6 +7,11 @@ import javax.persistence.CascadeType
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
 
+data class AuthenticationDTO(
+    var usuario: String = "",
+    var contra: String
+)
+
 data class UsuarioDTO(
     var id: Long? = null,
     var correo:String = "",

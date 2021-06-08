@@ -49,4 +49,12 @@ class RolService(@Autowired val rolRepository: RolRepository) {
         }
     }
 
+    fun existeRolPorNombre(rol:String):Boolean {
+        return rolRepository.existsByRol(rol)
+    }
+
+    fun encontrarPorRol(rol:String):Rol{
+        return rolRepository.findByRol(rol)
+    }
+
 }

@@ -6,4 +6,9 @@ import utex.edu.e3.siasapi.Entity.Rol
 
 @Repository
 interface RolRepository: JpaRepository<Rol, Long> {
+
+    fun existsByRol(rol:String):Boolean
+
+    fun findByRol(rol:String):Rol
+
 }

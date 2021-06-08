@@ -34,6 +34,16 @@ class UsuarioService(@Autowired private val usuarioRepository: UsuarioRepository
         }
     }
 
+    fun obtenerUsuarioPorCorreo (correo:String?) : Usuario? {
+        val usuario = usuarioRepository.findByCorreo(correo)
+        var tempUsuario:Usuario? = null
+        if (usuario.isPresent) {
+            tempUsuario = usuario.get()
+            return tempUsuario
+        }
+        return null
+    }
+
     fun guardarUsuario(usuario:Usuario):UsuarioDTO {
         val tempUsuario = usuarioRepository.save(usuario)
         return UsuarioDTO(tempUsuario.id,tempUsuario.correo,tempUsuario.estado,tempUsuario.ultimoLogin,tempUsuario.rol!!.rol)
@@ -46,6 +56,10 @@ class UsuarioService(@Autowired private val usuarioRepository: UsuarioRepository
         } else {
             return ResponseEntity.notFound().build()
         }
+    }
+
+    fun existeUsuarioPorCorreo(correo:String):Boolean {
+        return usuarioRepository.existsByCorreo(correo)
     }
 
 }

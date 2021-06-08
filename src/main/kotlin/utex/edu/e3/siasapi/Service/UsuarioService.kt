@@ -1,7 +1,6 @@
 package utex.edu.e3.siasapi.Service
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import utex.edu.e3.siasapi.DTO.UsuarioDTO
@@ -10,7 +9,10 @@ import utex.edu.e3.siasapi.Repository.UsuarioRepository
 import java.util.*
 
 @Service
-class UsuarioService(@Autowired private val usuarioRepository: UsuarioRepository) {
+class UsuarioService(
+    @Autowired private val usuarioRepository: UsuarioRepository,
+    @Autowired private val rolService: RolService
+    ) {
 
     fun obtenerUsuarios(): List<UsuarioDTO> {
         val listaUsuario = usuarioRepository.findAll()
@@ -22,15 +24,14 @@ class UsuarioService(@Autowired private val usuarioRepository: UsuarioRepository
         return listaUsuariosDTO
     }
 
-    fun obtenerUnUsuario(id:Long): ResponseEntity<UsuarioDTO> {
+    fun obtenerUnUsuario(id:Long): UsuarioDTO {
         val usuario: Optional<Usuario> = usuarioRepository.findById(id)
         val tempUsuario: Usuario
         if (usuario.isPresent) {
             tempUsuario = usuario.get()
-            val usuarioDTO = UsuarioDTO(tempUsuario.id,tempUsuario.correo,tempUsuario.estado,tempUsuario.ultimoLogin,tempUsuario.rol!!.rol)
-            return ResponseEntity.ok(usuarioDTO)
+            return UsuarioDTO(tempUsuario.id,tempUsuario.correo,tempUsuario.estado,tempUsuario.ultimoLogin,tempUsuario.rol!!.rol)
         } else {
-            return ResponseEntity.notFound().build()
+            return UsuarioDTO()
         }
     }
 
@@ -49,13 +50,11 @@ class UsuarioService(@Autowired private val usuarioRepository: UsuarioRepository
         return UsuarioDTO(tempUsuario.id,tempUsuario.correo,tempUsuario.estado,tempUsuario.ultimoLogin,tempUsuario.rol!!.rol)
     }
 
-    fun eliminarUsuario(id:Long): ResponseEntity<Boolean> {
-        if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id)
-            return ResponseEntity.ok(true)
-        } else {
-            return ResponseEntity.notFound().build()
-        }
+    //TODO Investigar porque no elimina el usuario
+    fun eliminarUsuario(id:Long) {
+        print(usuarioRepository.getById(id).correo)
+        usuarioRepository.deleteById(id)
+        print(usuarioRepository.existsById(id))
     }
 
     fun existeUsuarioPorCorreo(correo:String):Boolean {

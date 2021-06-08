@@ -25,3 +25,14 @@ data class RolDTO(
     var rol: String = "",
     var estado: String = "",
 )
+
+data class EstudianteDTO(
+        var id:Long? = null,
+        var nombre: String = "",
+        var primerApellido: String = "",
+        var segundoApellido: String = "",
+        var matricula: String = "",
+        var usuario: String = "",
+        var carrera: String = "",
+        var divisionEst: String = ""
+)

@@ -13,27 +13,31 @@ data class Division(
 
 @Entity
 data class Usuario(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
     var correo:String,
     var contrasena:String,
     var estado: String,
-    var ultimoLogin: Date,
+
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
+    var ultimoLogin: Date? = null
 
     @ManyToOne
     @JoinColumn(name = "rol_id")
     var rol: Rol? = null
-)
+}
 
 @Entity
 data class Rol(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id:Long,
     var rol: String,
     var estado: String,
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id:Long? = null
 
     @OneToMany(mappedBy = "rol", cascade = arrayOf(CascadeType.ALL))
     var usuarios: List<Usuario> = emptyList()
-)
+}

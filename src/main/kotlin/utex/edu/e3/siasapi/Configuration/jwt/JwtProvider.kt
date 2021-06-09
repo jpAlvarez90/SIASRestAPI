@@ -30,12 +30,14 @@ class JwtProvider {
     }
 
     fun getUsernameFromToken(token:String): String {
-        return Jwts.parser().setSigningKey(this.passwordSecret).parseClaimsJws(token).body.subject
+        val encodedString:String = Base64.getEncoder().encodeToString(passwordSecret.encodeToByteArray())
+        return Jwts.parser().setSigningKey(encodedString).parseClaimsJws(token).body.subject
     }
 
     fun verifyToken(token:String): Boolean {
         try {
-            Jwts.parser().setSigningKey(this.passwordSecret).parseClaimsJws(token)
+            val encodedString:String = Base64.getEncoder().encodeToString(passwordSecret.encodeToByteArray())
+            Jwts.parser().setSigningKey(encodedString).parseClaimsJws(token)
             return true
         }catch (e:MalformedJwtException) {
             errorMsg = "Token mal formado.";

@@ -30,13 +30,13 @@ class JwtTokenFilter (): OncePerRequestFilter() {
             var token:String? = null
 
             if (header != null && header.startsWith("Bearer")) {
-               token = header.replace("Bearer","")
+               token = header.replace("Bearer ","")
             }
 
             if (token != null && jwtProvider.verifyToken(token)) {
                 val username:String = jwtProvider.getUsernameFromToken(token)
                 val userDetails:UserDetails = userDetailsService.loadUserByUsername(username)
-                val auth: UsernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(username,null,userDetails.authorities)
+                val auth = UsernamePasswordAuthenticationToken(username,null,userDetails.authorities)
                 SecurityContextHolder.getContext().authentication = auth
             }
         } catch (e:Exception) {

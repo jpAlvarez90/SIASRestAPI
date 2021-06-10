@@ -28,10 +28,8 @@ class EstudianteService(
         return listaEstudianteDTO
     }
 
-    fun guardadEstudiante(estudiante: Estudiante):EstudianteDTO{
+    fun guardadEstudiante(estudiante: Estudiante):String{
         val tempEstudiante = estudianteRepository.save(estudiante)
-        return EstudianteDTO(estudiante.id, estudiante.nombre, estudiante.primerApellido,
-                estudiante.segundoApellido,estudiante.matricula,estudiante.usuario!!.correo, estudiante.carrera!!.nombre,
-                estudiante.divisionEst!!.nombre)
+        return "listo"
     }
 }

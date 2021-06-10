@@ -10,9 +10,8 @@ import utex.edu.e3.siasapi.Service.DivisionService
 class DivisionController (@Autowired val divisonService: DivisionService) {
 
     @GetMapping("/consultar-todas")
-    fun consultarDivisiones(): MutableIterable<Division> {
-        return divisonService.findAllDivisiones()
-    }
+    fun consultarDivisiones() = divisonService.findAllDivisiones()
+
 
     @PostMapping("/crear-division")
     fun crearDivision(@RequestBody divison: Division): Division {

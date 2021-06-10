@@ -36,3 +36,9 @@ data class EstudianteDTO(
         var carrera: String = "",
         var divisionEst: String = ""
 )
+
+data class DivisionDTO(
+        var id:Long?= null,
+        var nombre: String = "",
+        var siglas: String = ""
+)
